@@ -2,21 +2,92 @@
 <html lang="en">
 <head>
     <script>
+
+document.addEventListener('keydown', function(event) {
+      if (event.key === 'w' || event.key === 'W') {
+        moveTurtleForward(); 
+      } else if (event.key === 's' || event.key === 'S') {
+        moveTurtleBackward();
+      } else if (event.key === 'Shift' || event.keyCode === 16) {
+        turtleGoUp();
+      } else if (event.key === 'Spacebar' || event.keyCode === 32) {
+        turtleGoDown();
+      } else if (event.key === 'd' || event.key === 'D') {
+        turnTurtleRight();
+      } else if (event.key === 'a' || event.key === 'A') {
+        turnTurtleLeft();
+      }
+    });
+
+
+
+
+
         const ws = new WebSocket("ws://localhost:8085")
         function moveTurtleForward(){
             ws.send("return turtle.forward()")
         }
 
+        function turtleGetFuelLevelLoop() {
+            setTimeout(() => {
+                ws.send("return turtle.getFuelLevel()")
+            }, 5000)
+        }
+
+
+        function turtleGetFuelLevel() {
+            ws.send("return turtleGetFuelLevel()")
+        }
+
+        function turtleRefuel() {
+            ws.send("return turtle.refuel()")
+        }
+
+        function moveTurtleBackward(){
+            ws.send("return turtle.back()")
+        }
+
+        function turnTurtleRight(){
+            ws.send("return turtle.turnRight()")
+        }
+
+        function turnTurtleLeft(){
+            ws.send("return turtle.turnLeft()")
+        }
+
+        function turtleGoUp(){
+            ws.send("return turtle.up()")
+        }
+
+        function turtleGoDown(){
+            ws.send("return turtle.down()")
+        }
+
+        function turtleMine(){
+            ws.send("return turtle.dig()")
+        }
+
+
         ws.addEventListener("message",msg => {
             console.log(msg.data)
         })
 
+       
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
+    <button onclick="turtleGetFuelLevel()">Fuel Test</button>
+    <button onclick="turtleRefuel()">Refuel</button>
     <button onclick="moveTurtleForward()"> Forward </button>
+    <button onclick="moveTurtleBackward()"> Backward </button>
+    <button onclick="turnTurtleRight()"> Turn Right </button>
+    <button onclick="turnTurtleLeft()"> Turn Left </button>
+    <button onclick="turtleGoUp()"> Go Up </button>
+    <button onclick="turtleGoDown()"> Go Down </button>
+    <button onclick="turtleMine()"> Mine </button>
+    
 </body>
 </html>
