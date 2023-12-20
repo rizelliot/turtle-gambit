@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        const ws = new WebSocket("ws://localhost:8085")
+        function moveTurtleForward(){
+            ws.send("return turtle.forward")
+        }
+
+        ws.addEventListener("message",msg => {
+            console.log(msg.data)
+        })
+
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="moveTurtleForward()"> Forward </button>
+</body>
+</html>
